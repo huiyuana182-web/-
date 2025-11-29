@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>带派智能聊天室 - 登录</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>带派智能聊天室</h1>
+            <div class="form-group">
+                <label for="nickname">昵称</label>
+                <input type="text" id="nickname" placeholder="请输入您的昵称" required>
+                <small id="nickname-error" class="error"></small>
+            </div>
+            <div class="form-group">
+                <label for="server">服务器地址</label>
+                <select id="server" required>
+                    <option value="">请选择服务器</option>
+                </select>
+            </div>
+            <button id="login-btn">登录</button>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 加载服务器列表
+            $.get('/get_servers', function(data) {
+                const serverSelect = $('#server');
+                data.forEach(server => {
+                    serverSelect.append(`<option value="${server}">${server}</option>`);
+                });
+            });
+            
+            // 昵称验证
+            $('#nickname').on('blur', function() {
+                const nickname = $(this).val().trim();
+                if (nickname) {
+                    $.get(`/check_nickname?nickname=${encodeURIComponent(nickname)}`, function(data) {
+                        const errorElement = $('#nickname-error');
+                        if (!data.valid) {
+                            errorElement.text('该昵称已被使用，请更换其他昵称');
+                        } else {
+                            errorElement.text('');
+                        }
+                    });
+                }
+            });
+            
+            // 登录按钮点击事件
+            $('#login-btn').on('click', function() {
+                const nickname = $('#nickname').val().trim();
+                const server = $('#server').val();
+                
+                if (!nickname) {
+                    alert('请输入昵称');
+                    return;
+                }
+                
+                if (!server) {
+                    alert('请选择服务器');
+                    return;
+                }
+                
+                // 再次验证昵称是否可用
+                $.get(`/check_nickname?nickname=${encodeURIComponent(nickname)}`, function(data) {
+                    if (data.valid) {
+                        // 跳转到聊天页面
+                        window.location.href = `/chat?nickname=${encodeURIComponent(nickname)}&server=${encodeURIComponent(server)}`;
+                    } else {
+                        alert('该昵称已被使用，请更换其他昵称');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

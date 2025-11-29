@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>带派智能聊天室</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>带派智能聊天室</h2>
+            <div class="user-info">
+                <span>欢迎，{{ nickname }}</span>
+                <button id="logout-btn">退出</button>
+            </div>
+        </div>
+        
+        <div class="chat-main">
+            <div class="users-sidebar">
+                <div class="sidebar-header">
+                    <h3>在线用户</h3>
+                </div>
+                <div class="users-list" id="users-list">
+                    <!-- 在线用户列表将通过JavaScript动态加载 -->
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="welcome-message">
+                    <p>欢迎来到带派智能聊天室！</p>
+                    <p>提示：您可以使用以下命令：</p>
+                    <ul>
+                        <li>@奶小胖 [消息] - 与AI助手对话</li>
+                        <li>@电影 [URL] - 分享电影链接</li>
+                        <li>@用户名 - @其他用户</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-footer">
+            <div class="emoji-picker" id="emoji-picker">
+                <button id="emoji-btn">😊</button>
+                <div class="emoji-panel">
+                    <!-- emoji分类标签 -->
+                    <div class="emoji-tabs">
+                        <button class="emoji-tab active" data-category="face">😀</button>
+                        <button class="emoji-tab" data-category="hand">👍</button>
+                        <button class="emoji-tab" data-category="heart">❤️</button>
+                        <button class="emoji-tab" data-category="animal">🐶</button>
+                        <button class="emoji-tab" data-category="food">🍔</button>
+                        <button class="emoji-tab" data-category="activity">⚽</button>
+                        <button class="emoji-tab" data-category="travel">🚗</button>
+                        <button class="emoji-tab" data-category="object">📱</button>
+                        <button class="emoji-tab" data-category="symbol">⭐</button>
+                        <button class="emoji-tab" data-category="flag">🚩</button>
+                    </div>
+                    
+                    <!-- emoji内容区域 -->
+                    <div class="emoji-content">
+                        <!-- 面部表情 -->
+                        <div class="emoji-list" data-category="face">
+                            😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾
+                        </div>
+                        
+                        <!-- 手势 -->
+                        <div class="emoji-list" data-category="hand" style="display:none;">
+                            👋 🤚 🖐 ✋ 🖖 👌 🤏 ✌️ 🤞 🤟 🤘 🤙 👈 👉 👆 👇 ☝️ 👍 👎 ✊ 👊 🤛 🤜 👏 🙌 👐 🤲 🤝 🙏 ✍️ 💪 🦾 🦵 🦶 👣 👂 🦻 🧠 🦷 🦴 👀 👁️ 👅 👄 💋 🩸
+                        </div>
+                        
+                        <!-- 心形 -->
+                        <div class="emoji-list" data-category="heart" style="display:none;">
+                            ❤️ 🧡 💛 💚 💙 💜 🖤 🤍 🤎 💔 ❣️ 💖 💗 💓 💞 💘 💝 💟 💕 🥰 😍 😘 😻
+                        </div>
+                        
+                        <!-- 动物 -->
+                        <div class="emoji-list" data-category="animal" style="display:none;">
+                            🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐽 🸸 🐸 🐵 🙈 🙉 🙊 🐔 🐧 🐦 🐤 🐣 🐥 🦆 🦅 🦉 🦇 🐺 🐗 🐴 🦄 🐝 🐛 🦋 🐌 🐞 🐜 🦗 🕷️ 🕸️ 🦂 🐢 🐍 🦎 🦖 🦕 🐙 🐚 🐠 🐟 🐡 🐬 🐳 🐋 🦈 🐊 🐅 🐆 🦓 🦍 🦧 🐘 🦛 🦏 🐪 🐫 🦒 🦘 🦝 🦡 🐀 🐁 🐭 🐹 🐰 🐇 🐿️ 🦨 🦡 🦦 🦥 🦔 🐉 🐲 🦑 🦐 🦞 🦀 🐡 🐠 🐟 🐬 🐳 🐋
+                        </div>
+                        
+                        <!-- 食物 -->
+                        <div class="emoji-list" data-category="food" style="display:none;">
+                            🍏 🍎 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🍈 🍒 🍑 🥭 🍍 🥥 🥝 🍅 🍆 🥑 🥦 🥬 🥒 🌶️ 🌽 🥕 🧄 🧅 🥔 🍠 🥐 🥖 🧀 🥚 🍳 🧈 🐔 🐓 🍗 🍖 🥩 🥓 🍞 🥐 🥖 🥨 🧀 🧁 🍰 🎂 🍮 🍭 🍬 🍫 🍿 🥜 🌰 🍯 🥛 🍼 🍵 ☕ 🍶 🍺 🍻 🥂 🍷 🥃 🍸 🍹 🧃 🧉 🥤 🥢 🍽️ 🍴 🥄 🍾
+                        </div>
+                        
+                        <!-- 活动 -->
+                        <div class="emoji-list" data-category="activity" style="display:none;">
+                            ⚽ 🎾 🏀 🏐 🏈 ⚾ 🥎 🏐 🏉 🥏 🎱 🪀 🏓 🏸 🏒 🏑 🪃 🎣 🤿 🛹 🛷 🥌 🎿 ⛸️ 🪂 🏋️ 🤼 🤸 🤺 🤾 🏌️ 🏇 🧘 🤽 🤾 🏌️ 🏄 🤽 🤾 🏊 🤿 🧗
+                        </div>
+                        
+                        <!-- 旅行 -->
+                        <div class="emoji-list" data-category="travel" style="display:none;">
+                            🚗 🚕 🚙 🚌 🚎 🏎️ 🚓 🚑 🚒 🚐 🚚 🚛 🚜 🦽 🦼 🛴 🚲 🛵 🏍️ 🛺 🚔 🚍 🚘 🚖 🚨 🚨 🚒 🚑 🚓 🚚 🚛 🚜 🚀 🛸 🛰️ 🛫 🛬 ✈️ 🛩️ 🛰️ 🚁 🛸 🛳️ ⛵ 🚤 🛥️ ⚓ 🚢 ⚓ 🛶 🚣 🚣‍♂️ 🚣‍♀️ 🛳️ ⛵ 🚤
+                        </div>
+                        
+                        <!-- 物体 -->
+                        <div class="emoji-list" data-category="object" style="display:none;">
+                            📱 📲 💻 🖥️ 🖨️ 📠 📞 📟 📠 🔋 🔌 💡 🔦 🚨 🚦 🚥 ⚠️ 📢 📣 📯 🔔 🔕 ⏰ ⏱️ ⏲️ 🕰️ ⏳ ⌛ 📅 📆 📇 📈 📉 📊 📋 📝 📜 📃 📄 📰 🗞️ 📚 📖 📕 📗 📘 📙 📔 📒 📓 📙 📗 📘 📕 📖 📚 📚 📔 📒 📓
+                        </div>
+                        
+                        <!-- 符号 -->
+                        <div class="emoji-list" data-category="symbol" style="display:none;">
+                            ⭐ 🌟 💫 ✨ ⚡ ☄️ 💥 🔥 💧 🌊 🌈 🌪️ 🌫️ 🌨️ 🌧️ 🌦️ 🌤️ ☀️ 🌙 🌚 🌛 🌜 ⛅ ☁️ 🌫️ 🌬️ 💨 🌩️ ⚡ 🌋 🌍 🌎 🌏 🌐 🗺️ 🗾 🗿 🏔️ ⛰️ 🌋 🌄 🌅 🌆 🌇 🌉 🌁 🏙️ 🏘️ 🏚️ 🏗️ 🏭 🏢 🏬 🏣 🏤 🏥 🏦 🏨 🏪 🏫 🏬 🏣 🏤 🏥 🏦 🏨 🏪 🏫 🏩 🏪 🏫
+                        </div>
+                        
+                        <!-- 旗帜 -->
+                        <div class="emoji-list" data-category="flag" style="display:none;">
+                            🚩 🇨🇳 🇺🇸 🇬🇧 🇫🇷 🇩🇪 🇯🇵 🇰🇷 🇮🇹 🇪🇸 🇷🇺 🇨🇦 🇦🇺 🇮🇳 🇧🇷 🇲🇽 🇨🇱 🇨🇴 🇵🇪 🇨🇺 🇭🇰 🇲🇴 🇹🇼
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group">
+                <textarea id="message-input" placeholder="输入消息...（支持@命令和emoji表情）" rows="1"></textarea>
+                <button id="send-btn">发送</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+    <script>
+        $(document).ready(function() {
+            const nickname = '{{ nickname }}';
+            let socket = null;
+            
+            // 连接WebSocket
+            function connectSocket() {
+                // 获取当前页面的协议和主机
+                const protocol = window.location.protocol;
+                const host = window.location.host;
+                const socketUrl = `${protocol}//${host}`;
+                
+                socket = io(socketUrl);
+                
+                // 连接成功
+                socket.on('connect', function() {
+                    console.log('WebSocket connected');
+                    // 加入聊天室
+                    socket.emit('join', { nickname: nickname });
+                });
+                
+                // 加入成功
+                socket.on('join_success', function(data) {
+                    updateUsersList(data.users);
+                    appendMessage('系统', data.message, 'system');
+                });
+                
+                // 用户加入
+                socket.on('user_joined', function(data) {
+                    updateUsersList(data.users);
+                    appendMessage('系统', `${data.nickname} 加入了聊天室`, 'system');
+                });
+                
+                // 用户离开
+                socket.on('user_left', function(data) {
+                    updateUsersList(data.users);
+                    appendMessage('系统', `${data.nickname} 离开了聊天室`, 'system');
+                });
+                
+                // 接收消息
+                socket.on('receive_message', function(data) {
+                    appendMessage(data.nickname, data.message, data.type);
+                });
+                
+                // 断开连接
+                socket.on('disconnect', function() {
+                    console.log('WebSocket disconnected');
+                    appendMessage('系统', '连接已断开，请刷新页面重试', 'system');
+                });
+            }
+            
+            // 更新在线用户列表
+            function updateUsersList(users) {
+                const usersList = $('#users-list');
+                usersList.empty();
+                users.forEach(user => {
+                    const isCurrentUser = user === nickname;
+                    usersList.append(`
+                        <div class="user-item ${isCurrentUser ? 'current-user' : ''}">
+                            <span class="user-status"></span>
+                            <span class="user-name">${user}${isCurrentUser ? ' (我)' : ''}</span>
+                        </div>
+                    `);
+                });
+            }
+            
+            // 添加消息到聊天区域
+            function appendMessage(sender, message, type) {
+                const messagesDiv = $('#chat-messages');
+                let messageClass = 'message';
+                
+                if (type === 'system') {
+                    messageClass = 'message system-message';
+                } else if (type === 'ai_response') {
+                    messageClass = 'message ai-message';
+                } else if (type === 'movie_link') {
+                    messageClass = 'message movie-message';
+                } else if (type === 'mention') {
+                    messageClass = 'message mention-message';
+                } else if (sender === nickname) {
+                    messageClass = 'message my-message';
+                }
+                
+                messagesDiv.append(`
+                    <div class="${messageClass}">
+                        ${type !== 'system' ? `<div class="message-header">${sender}</div>` : ''}
+                        <div class="message-content"></div>
+                    </div>
+                `);
+                
+                // 使用html()方法以支持iframe等HTML内容
+                const lastMessage = messagesDiv.children().last().find('.message-content');
+                lastMessage.html(message);
+                
+                // 滚动到底部
+                messagesDiv.scrollTop(messagesDiv.prop('scrollHeight'));
+            }
+            
+            // 发送消息
+            function sendMessage() {
+                const messageInput = $('#message-input');
+                const message = messageInput.val().trim();
+                
+                if (message && socket) {
+                    socket.emit('send_message', { nickname: nickname, message: message });
+                    messageInput.val('');
+                }
+            }
+            
+            // 退出聊天室
+            function logout() {
+                if (socket) {
+                    socket.emit('leave', { nickname: nickname });
+                    socket.disconnect();
+                }
+                window.location.href = '/';
+            }
+            
+            // 使用事件委托处理emoji点击事件，确保动态创建的emoji也能正常工作
+            $('.emoji-content').on('click', '.emoji-list span', function(e) {
+                e.stopPropagation(); // 防止关闭emoji面板
+                
+                const emoji = $(this).text();
+                const messageInput = $('#message-input');
+                
+                // 获取当前光标位置
+                const start = messageInput.prop('selectionStart');
+                const end = messageInput.prop('selectionEnd');
+                const text = messageInput.val();
+                
+                // 在光标位置插入emoji
+                messageInput.val(text.substring(0, start) + emoji + text.substring(end));
+                
+                // 重新聚焦并设置光标位置
+                messageInput.focus();
+                const newCursorPos = start + emoji.length;
+                messageInput.prop('selectionStart', newCursorPos);
+                messageInput.prop('selectionEnd', newCursorPos);
+                
+                // 自动调整输入框高度
+                adjustTextareaHeight();
+            });
+            
+            // 初始化emoji列表函数
+            function initEmojiPanels() {
+                $('.emoji-list').each(function() {
+                    const emojiList = $(this);
+                    const emojis = emojiList.text().trim().split(' ');
+                    emojiList.empty();
+                    emojis.forEach(emoji => {
+                        emojiList.append(`<span>${emoji}</span>`);
+                    });
+                });
+            }
+            
+            // 初始化emoji列表
+            initEmojiPanels();
+            
+            // 切换emoji选择器显示
+            $('#emoji-btn').on('click', function(e) {
+                e.stopPropagation();
+                $('.emoji-panel').toggle();
+            });
+            
+            // emoji分类切换
+            $('.emoji-tab').on('click', function() {
+                const category = $(this).data('category');
+                
+                // 更新选中状态
+                $('.emoji-tab').removeClass('active');
+                $(this).addClass('active');
+                
+                // 切换emoji列表显示
+                $('.emoji-list').hide();
+                $(`.emoji-list[data-category="${category}"]`).show();
+            });
+            
+            // 点击其他地方关闭emoji选择器
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#emoji-picker').length) {
+                    $('.emoji-panel').hide();
+                }
+            });
+            
+            // 发送按钮点击事件
+            $('#send-btn').on('click', sendMessage);
+            
+            // 回车发送消息（Ctrl+Enter换行）
+            $('#message-input').on('keydown', function(e) {
+                if (e.which === 13 && !e.ctrlKey && !e.shiftKey) {  // Enter键
+                    e.preventDefault();
+                    sendMessage();
+                } else if (e.which === 13 && (e.ctrlKey || e.shiftKey)) {
+                    // Ctrl+Enter或Shift+Enter换行，让浏览器默认处理
+                    setTimeout(adjustTextareaHeight, 0);
+                }
+            });
+            
+            // 输入时自动调整textarea高度
+            $('#message-input').on('input', adjustTextareaHeight);
+            
+            // 自动调整textarea高度函数
+            function adjustTextareaHeight() {
+                const textarea = $('#message-input');
+                textarea.css('height', 'auto');
+                const scrollHeight = textarea.prop('scrollHeight');
+                // 限制最大高度
+                const maxHeight = 120;
+                textarea.css('height', Math.min(scrollHeight, maxHeight) + 'px');
+            }
+            
+            // 退出按钮点击事件
+            $('#logout-btn').on('click', logout);
+            
+            // 页面关闭前断开连接
+            window.addEventListener('beforeunload', function() {
+                if (socket) {
+                    socket.emit('leave', { nickname: nickname });
+                    socket.disconnect();
+                }
+            });
+            
+            // 初始化连接
+            connectSocket();
+        });
+    </script>
+</body>
+</html>
